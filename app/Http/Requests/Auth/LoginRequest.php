@@ -29,12 +29,16 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
     public function messages()
     {
         return [
             'email.required' => 'Please enter your email address.',
             'email.email' => 'The email address is not valid.',
-            'email.unique' => 'The email address has already been taken.',
             'password.required' => 'Please enter your password.',
             'password.min' => 'The password must be at least :min characters.',
         ];
