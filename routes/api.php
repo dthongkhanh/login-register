@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,11 @@ Route::middleware('auth:api')->group(function () {
         Route::post('login', [AuthController::class, 'login'])->withoutMiddleware('auth:api');
         Route::post('register', [AuthController::class, 'register'])->withoutMiddleware('auth:api');
     });
+});
+
+Route::group(['prefix' => 'user'], function () {
+    Route::get('list', [UserController::class, 'index']);
+    Route::post('create', [UserController::class, 'store']);
+    Route::put('update/{id}', [UserController::class, 'update']);
+    Route::delete('delete/{id}', [UserController::class, 'delete']);
 });
