@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Payment\PaymentController;
@@ -22,5 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::POST('payment', [PaymentController::class, 'payment']);
-Route::POST('login', [LoginController::class, 'login']);
-Route::POST('register', [RegisterController::class, 'register']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('login', [AuthController::class, 'login'])->withoutMiddleware('auth:api');
+        Route::post('register', [AuthController::class, 'register'])->withoutMiddleware('auth:api');
+    });
+});
