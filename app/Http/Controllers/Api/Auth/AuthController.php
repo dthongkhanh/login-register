@@ -20,12 +20,12 @@ class AuthController extends Controller
     {
         $result = resolve(RegisterUserService::class)->setParams($request->validated())->handle();
         if (!$result) {
-            return $this->responseErrors('has an error when register user');
+            return $this->responseErrors(__('messages.register_fail'));
         }
 
         return $this->responseSuccess([
             'user' => $result,
-            'message' => 'register success',
+            'message' => __('messages.register_success'),
         ]);
     }
 
@@ -39,7 +39,7 @@ class AuthController extends Controller
         $credentials = $request->validated();
         $token = auth('api')->attempt($credentials);
         if (!$token) {
-            return $this->responseErrors('Unauthorized', Response::HTTP_UNAUTHORIZED);
+            return $this->responseErrors(__('messages.unauthorized'), Response::HTTP_UNAUTHORIZED);
         }
 
         $user = auth('api')->user();
