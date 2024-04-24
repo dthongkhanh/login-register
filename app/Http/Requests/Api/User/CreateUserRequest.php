@@ -28,6 +28,7 @@ class CreateUserRequest extends BaseRequest
                 'min:8',
                 'max:20',
                 'confirmed',
+                'regex:/^\S+$/',
             ],
         ];
     }
@@ -49,6 +50,7 @@ class CreateUserRequest extends BaseRequest
             'password.min' => 'The password must be at least :min characters.',
             'password.max' => 'The password may not be greater than :max characters.',
             'password.confirmed' => 'The password confirmation does not match.',
+            'password.regex' => 'The password must not contain white characters,',
         ];
     }
 }

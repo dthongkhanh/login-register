@@ -30,11 +30,10 @@ Route::middleware('auth:api')->group(function () {
         Route::post('login', [AuthController::class, 'login'])->withoutMiddleware('auth:api');
         Route::post('register', [AuthController::class, 'register'])->withoutMiddleware('auth:api');
     });
-});
-
-Route::group(['prefix' => 'user'], function () {
-    Route::get('list', [UserController::class, 'index']);
-    Route::post('create', [UserController::class, 'store']);
-    Route::put('update/{id}', [UserController::class, 'update']);
-    Route::delete('delete/{id}', [UserController::class, 'delete']);
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('list', [UserController::class, 'index']);
+        Route::post('create', [UserController::class, 'store']);
+        Route::put('update/{id}', [UserController::class, 'update']);
+        Route::delete('delete/{id}', [UserController::class, 'delete']);
+    });
 });

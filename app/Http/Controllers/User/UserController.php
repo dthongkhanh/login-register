@@ -18,12 +18,12 @@ class UserController extends Controller
     {
         $user = resolve(CreateUserService::class)->setParams($request->validated())->handle();
         if (!$user) {
-            return $this->responseErrors('has an error when create user');
+            return $this->responseErrors(__('messages.error_action', ['action' => 'create', 'attribute' => 'user',]));
         }
 
         return $this->responseSuccess([
             'user' => $user,
-            'message' => 'create user success',
+            'message' => __('messages.create_success', ['attribute' => 'user']),
         ]);
     }
 
@@ -31,11 +31,11 @@ class UserController extends Controller
     {
         $user = resolve(DeleteUserService::class)->setParams($request)->handle();
         if (!$user) {
-            return $this->responseErrors('Not found user', Response::HTTP_NOT_FOUND);
+            return $this->responseErrors(__('messages.error_action', ['action' => 'delete', 'attribute' => 'user',]));
         }
 
         return $this->responseSuccess([
-            'message' => 'delete user success',
+            'message' => __('messages.delete_success', ['attribute' => 'user']),
         ]);
     }
 
@@ -43,12 +43,12 @@ class UserController extends Controller
     {
         $user = resolve(GetUserService::class)->handle();
         if (!$user) {
-            return $this->responseErrors('has an error when display user');
+            return $this->responseErrors(__('messages.error_action', ['action' => 'display', 'attribute' => 'users',]));
         }
 
         return $this->responseSuccess([
             'users' => $user,
-            'message' => 'display users success',
+            'message' => __('messages.read_success', ['attribute' => 'users']),
         ]);
     }
 
@@ -58,12 +58,12 @@ class UserController extends Controller
         $data['id'] = $id;
         $user = resolve(UpdateUserService::class)->setParams($data)->handle();
         if (!$user) {
-            return $this->responseErrors('Not found user', Response::HTTP_NOT_FOUND);
+            return $this->responseErrors(__('messages.error_action', ['action' => 'update', 'attribute' => 'user',]));
         }
 
         return $this->responseSuccess([
             'user' => $user,
-            'message' => 'update user success',
+            'message' => __('messages.update_success', ['attribute' => 'user']),
         ]);
     }
 }
