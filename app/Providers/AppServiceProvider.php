@@ -6,6 +6,7 @@ use App\Interfaces\Email\EmailServiceInterface;
 use App\Interfaces\User\UserRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Services\Email\EmailService;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Schema::defaultStringLength(191);
     }
 }

@@ -37,18 +37,18 @@ class AuthController extends Controller
     public function login(LoginRequest $request): Response
     {
         $credentials = $request->validated();
-        $token = auth('api')->attempt($credentials);
+        $token = auth()->attempt($credentials);
         if (!$token) {
             return $this->responseErrors(__('messages.unauthorized'), Response::HTTP_UNAUTHORIZED);
         }
 
-        $user = auth('api')->user();
+        $user = auth()->user();
 
         return $this->responseSuccess([
             'user' => $user,
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }
