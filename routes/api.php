@@ -33,7 +33,7 @@ Route::middleware('auth:api')->group(function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('list', [UserController::class, 'index']);
         Route::post('create', [UserController::class, 'store']);
-        Route::put('update/{id}', [UserController::class, 'update']);
+        Route::put('update/{id}', [UserController::class, 'update'])->middleware('checkRole');
         Route::delete('delete/{id}', [UserController::class, 'delete']);
     });
 });
