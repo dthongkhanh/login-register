@@ -21,7 +21,6 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->text('description')->nullable();
             $table->tinyInteger('status')->unsigned()->default(Status::PENDING);
-            $table->timestamp('send_mail_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

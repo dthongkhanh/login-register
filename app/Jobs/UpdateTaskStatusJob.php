@@ -32,7 +32,9 @@ class UpdateTaskStatusJob implements ShouldQueue
      */
     public function handle()
     {
-        $tasksPastDue = resolve(TaskRepository::class)->search('time_due', '<=', now())->get();
+        $tasksPastDue = resolve(TaskRepository::class)->search('time_due', '<=', now())
+            ->where('status', '!=', Status::COMPLETED)
+            ->get();
         foreach ($tasksPastDue as $task) {
             $task->update(['status' => Status::PAST_DUE]);
         }

@@ -17,8 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(SendTaskPastDueNotification::class)->daily();
-        $schedule->command(UpdateTaskStatus::class)->daily();
+        $schedule->command(SendTaskPastDueNotification::class)->daily()->withoutOverlapping();
+        $schedule->command(UpdateTaskStatus::class)->daily()->withoutOverlapping();;
     }
 
     /**
