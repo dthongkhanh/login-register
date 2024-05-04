@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\SendTaskPastDueNotification;
+use App\Console\Commands\UpdateTaskStatus;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(SendTaskPastDueNotification::class)->daily();
+        $schedule->command(UpdateTaskStatus::class)->daily();
     }
 
     /**

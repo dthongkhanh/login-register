@@ -39,8 +39,10 @@
             <div class="form-group">
                 <label>Status<span class="text-danger">*</span></label>
                 <select class="form-control" name="status">
-                    @foreach(App\Enums\Status::map() as $key=>$value)
+                    @foreach(App\Enums\Status::map() as $key => $value)
+                    @if($key !== App\Enums\Status::PAST_DUE)
                     <option value="{{ $key }}">{{ $value }}</option>
+                    @endif
                     @endforeach
                 </select>
             </div>
