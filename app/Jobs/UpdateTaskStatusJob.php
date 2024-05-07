@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Enums\Status;
+use App\Enums\StatusTask;
 use App\Repositories\Task\TaskRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -33,10 +33,10 @@ class UpdateTaskStatusJob implements ShouldQueue
     public function handle()
     {
         $tasksPastDue = resolve(TaskRepository::class)->search('time_due', '<=', now())
-            ->where('status', '!=', Status::COMPLETED)
+            ->where('status', '!=', StatusTask::COMPLETED)
             ->get();
         foreach ($tasksPastDue as $task) {
-            $task->update(['status' => Status::PAST_DUE]);
+            $task->update(['status' => StatusTask::PAST_DUE]);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Enums\Status;
+use App\Enums\StatusTask;
 use App\Mail\SendEmailNotificationPastDue;
 use App\Repositories\Task\TaskRepository;
 use Illuminate\Bus\Queueable;
@@ -34,7 +34,7 @@ class SendEmailJob implements ShouldQueue
     public function handle()
     {
         $tasksPastDue = resolve(TaskRepository::class)->search('time_due', '<=', now())
-            ->where('status', '!=', Status::COMPLETED)
+            ->where('status', '!=', StatusTask::COMPLETED)
             ->get();
         foreach ($tasksPastDue as $task) {
             $email = new SendEmailNotificationPastDue($task);

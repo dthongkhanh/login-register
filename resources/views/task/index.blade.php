@@ -27,7 +27,7 @@
                 <form action="{{ route('tasks.filter_by_status') }}" method="GET" class="d-flex">
                     @csrf
                     <select class="form-control mr-2" name="status">
-                        @foreach(App\Enums\Status::map() as $key => $value)
+                        @foreach(App\Enums\StatusTask::map() as $key => $value)
                         <option value="{{ $key }}">{{ $value }}</option>
                         @endforeach
                     </select>
@@ -56,7 +56,7 @@
                         <td>{{ $task->time_due }}</td>
                         <td>{{ $task->note }}</td>
                         <td>{{ $task->description }}</td>
-                        <td>{{ \App\Enums\Status::map()[$task->status] }}</td>
+                        <td>{{ \App\Enums\StatusTask::map()[$task->status] }}</td>
                         <td>
                             <a href="/task/update/{{ $task->id }}" class="btn btn-warning">Edit</a>
                             <form id="delete-form" action="/task/delete/{{ $task->id }}" method="POST" style="display: inline;">

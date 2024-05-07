@@ -5,13 +5,13 @@ namespace App\Enums;
 use Rexlabs\Enum\Enum;
 
 /**
- * The Status enum.
+ * The StatusTask enum.
  *
  * @method static self PENDING()
  * @method static self COMPLETED()
  * @method static self PAST_DUE()
  */
-class Status extends Enum
+class StatusTask extends Enum
 {
     const PENDING = 1;
     const COMPLETED = 2;

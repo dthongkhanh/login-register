@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\Status;
+use App\Enums\StatusTask;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->datetime('time_due');
             $table->text('note')->nullable();
             $table->text('description')->nullable();
-            $table->tinyInteger('status')->unsigned()->default(Status::PENDING);
+            $table->tinyInteger('status')->unsigned()->default(StatusTask::PENDING);
             $table->softDeletes();
             $table->timestamps();
         });

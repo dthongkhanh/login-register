@@ -9,6 +9,7 @@ use App\Models\Task;
 use App\Services\Task\CreateTaskService;
 use App\Services\Task\DeleteTaskService;
 use App\Services\Task\FilterTaskByStatusService;
+use App\Services\Task\FindTaskService;
 use App\Services\Task\GetTaskService;
 use App\Services\Task\SearchTaskService;
 use App\Services\Task\SortTaskByTimeDueService;
@@ -25,6 +26,7 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = resolve(GetTaskService::class)->handle();
+
         if (!$tasks) {
             toastr()->error(__('messages.error_action', ['action' => 'display', 'attribute' => 'tasks',]));
 
@@ -53,6 +55,7 @@ class TaskController extends Controller
     public function store(CreateTaskRequest $request)
     {
         $task = resolve(CreateTaskService::class)->setParams($request->validated())->handle();
+
         if (!$task) {
             toastr()->error(__('messages.error_action', ['action' => 'create', 'attribute' => 'task',]));
 
@@ -81,9 +84,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $task = Task::findOrFail($id);
+        $task = resolve(FindTaskService::class)->setParams($request)->handle();
 
         return view('task.update', compact('task'));
     }
@@ -99,7 +102,9 @@ class TaskController extends Controller
     {
         $data = $request->validated();
         $data['id'] = $id;
+        
         $task = resolve(UpdateTaskService::class)->setParams($data)->handle();
+
         if (!$task) {
             toastr()->error(__('messages.error_action', ['action' => 'update', 'attribute' => 'task',]));
 
@@ -117,10 +122,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $task = Task::findOrFail($id);
-        $task = resolve(DeleteTaskService::class)->setParams($task)->handle();
+        $task = resolve(DeleteTaskService::class)->setParams($request)->handle();
+
         if (!$task) {
             toastr()->error(__('messages.error_action', ['action' => 'display', 'attribute' => 'task',]));
 
@@ -141,8 +146,8 @@ class TaskController extends Controller
      */
     public function filter(Request $request)
     {
-        $status = $request->input('status');
-        $tasks = resolve(FilterTaskByStatusService::class)->setParams($status)->handle();
+        $tasks = resolve(FilterTaskByStatusService::class)->setParams($request->input('status'))->handle();
+
         if (!$tasks) {
             return redirect()->back();
         }
@@ -159,8 +164,8 @@ class TaskController extends Controller
      */
     public function sort(Request $request)
     {
-        $direction = $request->input('direction');
-        $tasks = resolve(SortTaskByTimeDueService::class)->setParams($direction)->handle();
+        $tasks = resolve(SortTaskByTimeDueService::class)->setParams($request->input('direction'))->handle();
+
         if (!$tasks) {
             return redirect()->back();
         }
@@ -177,12 +182,12 @@ class TaskController extends Controller
      */
     public function search(Request $request)
     {
-        $text_search = $request->input('text_search');
-        $tasks = resolve(SearchTaskService::class)->setParams($text_search)->handle();
+        $tasks = resolve(SearchTaskService::class)->setParams($request->input('text_search'))->handle();
+
         if (!$tasks) {
             return redirect()->back();
         }
-        
+
         return view('task.index', compact('tasks'));
     }
 }
